@@ -20,15 +20,19 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.get("/summoner/:username", (req, res) => {
-  const { username } = req.params;
-  if (username) {
+app.get("/summoner/:server/:username", (req, res) => {
+  const {
+    username,
+    server
+  } = req.params;
+
+  if (username && server) {
     redis.getCache(username).then(data => {
       if (data)
         return res.send(data);
       else {
         let matchArray = [];
-        helpers.getSummonerByName(username).then(data => {
+        helpers.getSummonerByName({ username, server }).then(data => {
           data.matches.forEach(match => {
             let result;
             let participantID;
@@ -56,7 +60,7 @@ app.get("/summoner/:username", (req, res) => {
           res.send({ matches: matchArray });
         }).catch(e => {
           console.log(e);
-          res.send({error: "No data for that summoner"});
+          res.send({ error: "No data for that summoner" });
         })
       }
     }).catch(e => { console.log(e) });
