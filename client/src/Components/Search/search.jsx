@@ -1,8 +1,9 @@
 import React from "react";
+import './search.css';
 
 function Search(props) {
   return (
-    <form onSubmit={props.handleSubmit}>
+    <form onSubmit={props.handleSubmit} className="name-input">
       <input
         className="search"
         disabled={props.isDisabled}

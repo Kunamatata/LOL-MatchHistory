@@ -9,7 +9,7 @@ const championListURL = 'https://ddragon.leagueoflegends.com/cdn/6.24.1/data/en_
  * Get the last 5 matches of the summoner
  * @param {String} username The username of the summoner
  */
-async function getSummonerByName(username) {
+async function getSummonerByName({username, server}) {
   try {
     const summoner = await kayn.Summoner.by.name(username).region(REGIONS.EUROPE_WEST);
     const matchlist = await kayn.Matchlist.by.accountID(summoner.accountId).region(REGIONS.EUROPE_WEST);
@@ -17,7 +17,7 @@ async function getSummonerByName(username) {
 
     for (let i = 0; i < 5; i++) {
       if (matchlist.matches[i]) {
-        let match = kayn.Match.get(matchlist.matches[i].gameId).region(REGIONS.EUROPE_WEST);
+        let match = kayn.Match.get(matchlist.matches[i].gameId).region(server);
         asyncMatches.push(match);
       }
     }

@@ -1,50 +1,65 @@
 import React, { Component } from "react";
 import Match from "../Match/match";
 import Search from "../Search/search";
+import RegionSelector from "../RegionSelector/regionselector";
 
-import './matchhistory.css'
+import "./matchhistory.css";
 
 class MatchHistory extends Component {
   constructor() {
     super();
+
     this.state = {
       loading: false,
       error: false,
+      server: this.defaultServer
     };
+
+    this.defaultServer = "euw";
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.getSummonerData = this.getSummonerData.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
-    this.getSummonerData("Dowdow");
+    this.getSummonerData({ username: "Dowdow", server: "euw" });
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    this.getSummonerData(this.state.value);
+    const { username, server } = this.state;
+    this.getSummonerData({
+      username,
+      server
+    });
   }
 
-  getSummonerData(username) {
+  onChange(e) {
+    this.setState({ server: e.target.value });
+  }
+
+  getSummonerData({ username, server }) {
+    server = server ? server : this.defaultServer;
     this.setState(Object.assign({}, this.state, { loading: true }));
-    fetch(`http://localhost:3001/summoner/${username}`)
+    fetch(`http://localhost:3001/summoner/${server}/${username}`)
       .then(data => {
         return data.json();
       })
       .then(matches => {
-        console.log(matches);
+        // console.log(matches);
         this.setState(Object.assign({}, matches, { loading: false }));
       });
   }
 
   handleChange(e) {
-    this.setState({ value: e.target.value });
+    this.setState({ username: e.target.value });
   }
 
   render() {
     const { loading, matches } = this.state;
-    if(loading){
-        return (<div className="loader"></div>)
+    if (loading) {
+      return <div className="loader" />;
     }
     if (matches) {
       return (
@@ -55,16 +70,18 @@ class MatchHistory extends Component {
             handleSubmit={this.handleSubmit}
             handleChange={this.handleChange}
           />
+          <RegionSelector onChange={this.onChange} />
           {matches.map((match, index) => {
             return <Match match={match} key={index} />;
           })}
         </div>
       );
-      if(matches.error){
-          return (<div>Error</div>)
-      }
     } else {
       return <div>Ok</div>;
+    }
+
+    if (matches.error) {
+      return <div>Error</div>;
     }
   }
 }
