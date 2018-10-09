@@ -1,0 +1,45 @@
+.match {
+    display: flex;
+    flex-flow: row;
+    margin: 5px 0px;
+    padding: 10px 10px;
+    align-items: center;
+}
+
+.match.victory{
+    background-color: rgb(213, 255, 210);
+}
+
+.match.defeat{
+    background-color: rgb(255, 183, 183);
+}
+
+.match > div {
+    width: 100px;
+
+}
+
+.champion-image,
+.champion-image img {
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+}
+
+.KDA {
+    font-weight: bold;
+}
+
+.KDA .kills {
+    color: rgb(49, 224, 160);
+}
+
+.KDA .deaths {
+    color: rgb(243, 54, 54);
+}
+
+.stats {
+    display: flex;
+    flex-flow: column;
+    text-align: center;
+}

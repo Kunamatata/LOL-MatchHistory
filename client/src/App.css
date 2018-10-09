@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Roboto');
+
+.app {
+  background: rgb(16, 14, 21);
+  height: 100%;
+  overflow: hidden;
+  min-height: 100%;
+}
+
+.match-history{
+  max-width: 980px;
+  height: 100%;
+  margin: 0 auto;
+  font-family: 'Montserrat';
+  font-size: .9rem;
+}
