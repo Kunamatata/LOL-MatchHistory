@@ -1,9 +1,16 @@
 .match {
     display: flex;
     flex-flow: row;
-    margin: 5px 0px;
-    padding: 10px 10px;
+    padding: 5px 5px;
     align-items: center;
+    border-bottom: 1px solid #000;
+    text-align: center;
+}
+
+.match > div {
+    width: 15%;
+    flex-wrap: wrap;
+    height: 100%;
 }
 
 .match.victory{
@@ -12,11 +19,6 @@
 
 .match.defeat{
     background-color: rgb(255, 183, 183);
-}
-
-.match > div {
-    width: 100px;
-
 }
 
 .champion-image{
@@ -53,4 +55,19 @@
     display: flex;
     flex-flow: column;
     text-align: center;
+}
+
+.items{
+    display: flex;
+    flex-flow: row;
+}
+
+.items img{
+    width: 30px;
+    height: 30px;
+    padding: 1px;
+}
+
+.summoner-name{
+    font-weight: bold;
 }

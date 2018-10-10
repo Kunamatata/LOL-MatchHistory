@@ -9,7 +9,7 @@ const championListURL = 'https://ddragon.leagueoflegends.com/cdn/6.24.1/data/en_
  * Get the last 5 matches of the summoner
  * @param {String} username The username of the summoner
  */
-async function getSummonerByName({username, server}) {
+async function getSummonerByName({ username, server }) {
   try {
     const summoner = await kayn.Summoner.by.name(username).region(REGIONS.EUROPE_WEST);
     const matchlist = await kayn.Matchlist.by.accountID(summoner.accountId).region(REGIONS.EUROPE_WEST);
@@ -24,7 +24,7 @@ async function getSummonerByName({username, server}) {
 
     let matches = await Promise.all(asyncMatches);
 
-    return { summonerId: summoner.id, matches: matches };
+    return { summonerName: summoner.name, summonerId: summoner.id, matches: matches };
   } catch (e) {
     console.log(e);
     throw new Error(e);
@@ -49,8 +49,27 @@ async function getChampions() {
   } catch (e) {
     throw new Error(e);
   }
-
 }
+
+// /**
+//  * Get the static list of champions from League of Legends
+//  */
+// async function getItems(items) {
+//   try {
+//     let asyncItems = [];
+
+//     items.forEach(item => {
+//       console.log(`${staticItemURL}/${item}`);
+//       asyncItems.push(axios.get(`${staticItemURL}/${item}.png`));
+//     })
+
+//     let result = await Promise.all(asyncItems);
+//     console.log(result)
+//     return result;
+//   } catch (e) {
+//     throw new Error(e);
+//   }
+// }
 
 module.exports = {
   getSummonerByName,

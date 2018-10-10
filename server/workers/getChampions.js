@@ -11,7 +11,6 @@ async function setChampionCache(redis) {
   } catch (e) {
     throw new Error(e);
   }
-
 }
 
 module.exports = {

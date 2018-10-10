@@ -22,7 +22,7 @@ class RegionSelector extends Component {
   render() {
     return (
       <div>
-        <select value="Select a Region" onChange={this.props.onChange}>
+        <select onChange={this.props.onChange}>
           <option disabled={true}>Select a Region</option>
           {Object.keys(regions).map((el, index) => {
             return (

@@ -27,14 +27,13 @@ app.get("/summoner/:server/:username", (req, res) => {
   } = req.params;
 
   if (username && server) {
-    redis.getCache(username).then(data => {
+    redis.getPlayerCache({ username, server }).then(data => {
       if (data)
         return res.send(data);
       else {
         let matchArray = [];
         helpers.getSummonerByName({ username, server }).then(data => {
           data.matches.forEach(match => {
-            let result;
             let participantID;
             match.participantIdentities.forEach((participant) => {
               if (participant.player.summonerId === data.summonerId) {
@@ -45,18 +44,20 @@ app.get("/summoner/:server/:username", (req, res) => {
             match.participants.forEach((participant) => {
               if (participant.participantId === participantID) {
                 let { stats } = participant;
-
+                let items = [stats.item0, stats.item1, stats.item2, stats.item3, stats.item4, stats.item5, stats.item6];
                 matchArray.push({
+                  stats,
+                  items,
+                  summonerName: data.summonerName,
                   gameDuration: match.gameDuration,
                   gameCreation: match.gameCreation,
-                  stats,
                   championImage: `http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/${champions[participant.championId]}.png`,
                   champion: champions[participant.championId],
                 })
               }
             });
           });
-          redis.setCache(username, { matches: matchArray });
+          redis.setPlayerCache({ username, server }, { matches: matchArray });
           res.send({ matches: matchArray });
         }).catch(e => {
           console.log(e);

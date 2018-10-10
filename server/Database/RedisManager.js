@@ -16,7 +16,8 @@ class RedisManager {
 
       this.redis.once('connect', data => {
         console.log('Redis connection established');
-        this.redis.flushall();
+        if (process.env)
+          this.redis.flushall();
         return resolve();
       })
 
@@ -33,6 +34,40 @@ class RedisManager {
   setCache(key, document) {
     console.log('Setting a redis cache for key: ' + key);
     this.redis.set(key, JSON.stringify(document));
+  }
+
+  /**
+   * 
+   * @param {String} key The key for the cache
+   * @param {Object} document JSON object to cache
+   */
+  setPlayerCache(key, document) {
+    const { username, server } = key;
+    if (username && server) {
+      console.log(`${username}-${server}`)
+      console.log('Setting a redis cache for key: ' + (username, server));
+      this.redis.set(`${username}-${server}`, JSON.stringify(document));
+    }
+  }
+
+  /**
+   * 
+   * @param {String} key The key to get the cache data from
+   * @returns {Promise} returns a promise containing the value of the cache
+   */
+  getPlayerCache(key) {
+    const { username, server } = key;
+    if (username && server) {
+      return new Promise((resolve, reject) => {
+        console.log(`${username}-${server}`)
+        this.redis.get(`${username}-${server}`, (err, value) => {
+          if (err)
+            return reject(new Error(err));
+          return resolve(JSON.parse(value));
+        })
+      })
+    }
+    throw new Error('You must specify a key for redis');
   }
 
   /**
