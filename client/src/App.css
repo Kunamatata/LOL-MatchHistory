@@ -3,8 +3,6 @@
 
 .app {
   background: rgb(16, 14, 21);
-  height: 100%;
-  overflow: hidden;
   min-height: 100%;
 }
 

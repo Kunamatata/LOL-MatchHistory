@@ -12,6 +12,7 @@ function match({ match }) {
 
       <div className="champion-image">
         <img className="image" src={match.championImage} />
+        <div className="champion-name">{match.champion}</div>
       </div>
       <div className="KDA">
         <span className="kills">{stats.kills}</span>  / <span className="deaths"> {stats.deaths} </span> / <span className="assists"> {stats.assists}</span>
