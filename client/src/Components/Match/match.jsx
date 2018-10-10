@@ -58,7 +58,12 @@ class Match extends Component {
         <div className="stats">
           <div className="level">Level {stats.champLevel}</div>
           <div className="game-duration">
-            Game duration {moment.duration(match.gameDuration, "seconds").humanize()}
+            Game duration{" "}
+            <div>
+              <strong>
+                {moment.duration(match.gameDuration, "seconds").humanize()}
+              </strong>
+            </div>
           </div>
         </div>
         <div className="items">
