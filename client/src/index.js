@@ -1,6 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Route } from "react-router-dom";
+
 import './index.css';
 import App from './App';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+<Router><Route path="/:server?/:summonerName?" component={App}></Route></Router>,
+document.getElementById('root'));
