@@ -22,8 +22,8 @@ class RegionSelector extends Component {
   render() {
     return (
       <div>
-        <select onChange={this.props.onChange}>
-          <option disabled={true} selected={true}>Select a Region</option>
+        <select value="Select a Region" onChange={this.props.onChange}>
+          <option disabled={true}>Select a Region</option>
           {Object.keys(regions).map((el, index) => {
             return (
               <option key={index} value={regions[el]}>
