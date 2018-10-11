@@ -3,7 +3,7 @@ require('dotenv').config();
 const axios = require('axios');
 const { Kayn, REGIONS } = require('kayn');
 const kayn = Kayn(process.env.RIOT_API)();
-const championListURL = 'https://ddragon.leagueoflegends.com/cdn/6.24.1/data/en_US/champion.json';
+const championListURL = 'https://ddragon.leagueoflegends.com/cdn/8.19.1/data/en_US/champion.json';
 
 /**
  * Get the last 5 matches of the summoner
@@ -11,8 +11,8 @@ const championListURL = 'https://ddragon.leagueoflegends.com/cdn/6.24.1/data/en_
  */
 async function getSummonerByName({ username, server }) {
   try {
-    const summoner = await kayn.Summoner.by.name(username).region(REGIONS.EUROPE_WEST);
-    const matchlist = await kayn.Matchlist.by.accountID(summoner.accountId).region(REGIONS.EUROPE_WEST);
+    const summoner = await kayn.Summoner.by.name(username).region(server);
+    const matchlist = await kayn.Matchlist.by.accountID(summoner.accountId).region(server);
     let asyncMatches = [];
 
     for (let i = 0; i < 5; i++) {
@@ -50,26 +50,6 @@ async function getChampions() {
     throw new Error(e);
   }
 }
-
-// /**
-//  * Get the static list of champions from League of Legends
-//  */
-// async function getItems(items) {
-//   try {
-//     let asyncItems = [];
-
-//     items.forEach(item => {
-//       console.log(`${staticItemURL}/${item}`);
-//       asyncItems.push(axios.get(`${staticItemURL}/${item}.png`));
-//     })
-
-//     let result = await Promise.all(asyncItems);
-//     console.log(result)
-//     return result;
-//   } catch (e) {
-//     throw new Error(e);
-//   }
-// }
 
 module.exports = {
   getSummonerByName,

@@ -38,21 +38,21 @@ class RedisManager {
 
   /**
    * 
-   * @param {String} key The key for the cache
+   * @param {Object} key The key for the cache that is the username and the server
    * @param {Object} document JSON object to cache
    */
   setPlayerCache(key, document) {
     const { username, server } = key;
     if (username && server) {
       console.log(`${username}-${server}`)
-      console.log('Setting a redis cache for key: ' + (username, server));
+      console.log(`Setting a redis cache for key: ${username}-${server}`);
       this.redis.set(`${username}-${server}`, JSON.stringify(document));
     }
   }
 
   /**
    * 
-   * @param {String} key The key to get the cache data from
+   * @param {Object} key The key for the cache that is the username and the server
    * @returns {Promise} returns a promise containing the value of the cache
    */
   getPlayerCache(key) {

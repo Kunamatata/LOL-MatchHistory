@@ -4,7 +4,7 @@ import "./match.css";
 import moment from "moment";
 import { statSync } from "fs";
 
-const itemURL = "https://ddragon.leagueoflegends.com/cdn/6.24.1/img/item";
+const itemURL = "https://ddragon.leagueoflegends.com/cdn/8.19.1/img/item";
 
 class Match extends Component {
   constructor() {
@@ -23,7 +23,6 @@ class Match extends Component {
           fetch(`${itemURL}/${item}.png`).then(data => data.blob())
         );
     });
-
     Promise.all(itemArray).then(data => {
       data = data.map(blob => {
         if (blob.size >= 500) return URL.createObjectURL(blob);

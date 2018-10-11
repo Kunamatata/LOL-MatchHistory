@@ -4,9 +4,7 @@ services:
     build: .
     image: riot-dev
     volumes:
-      - type: bind
-        source: ./
-        target: /usr/src/app
+      - .:/usr/src/app/
     ports:
       - "3001:3001"
     environment:

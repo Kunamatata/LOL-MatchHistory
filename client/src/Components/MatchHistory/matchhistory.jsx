@@ -5,9 +5,7 @@ import RegionSelector from "../RegionSelector/regionselector";
 
 import "./matchhistory.css";
 
-import {
-	withRouter
-} from 'react-router-dom';
+import { withRouter } from "react-router-dom";
 
 class MatchHistory extends Component {
   constructor() {
@@ -16,7 +14,7 @@ class MatchHistory extends Component {
     this.state = {
       loading: false,
       error: false,
-      server: this.defaultServer,
+      server: this.defaultServer
     };
 
     this.defaultServer = "euw";
@@ -27,7 +25,11 @@ class MatchHistory extends Component {
   }
 
   componentDidMount() {
-    this.getSummonerData({ username: this.props.summonerName || 'Dowdow', server: "euw" });
+    this.setState({ server: this.props.server });
+    this.getSummonerData({
+      username: this.props.summonerName || "Dowdow",
+      server: this.props.server
+    });
   }
 
   handleSubmit(e) {
@@ -37,6 +39,7 @@ class MatchHistory extends Component {
       username,
       server
     });
+    this.setState({ username, server });
     this.props.history.push(`/${server}/${username}`);
   }
 
@@ -47,7 +50,7 @@ class MatchHistory extends Component {
   getSummonerData({ username, server }) {
     server = server ? server : this.defaultServer;
     this.setState(Object.assign({}, this.state, { loading: true }));
-    fetch(`http://localhost:3001/summoner/${server}/${username}`)
+    fetch(`/summoner/${server}/${decodeURI(username)}`)
       .then(data => {
         return data.json();
       })
@@ -63,7 +66,7 @@ class MatchHistory extends Component {
   render() {
     const { loading, matches } = this.state;
     if (loading) {
-      return <div className="loader"></div>;
+      return <div className="loader" />;
     }
     if (matches) {
       return (
