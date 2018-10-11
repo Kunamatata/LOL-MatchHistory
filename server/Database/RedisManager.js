@@ -47,6 +47,7 @@ class RedisManager {
       console.log(`${username}-${server}`)
       console.log(`Setting a redis cache for key: ${username}-${server}`);
       this.redis.set(`${username}-${server}`, JSON.stringify(document));
+      this.redis.expire(`${username}-${server}`, 30 * 60);
     }
   }
 
@@ -59,7 +60,6 @@ class RedisManager {
     const { username, server } = key;
     if (username && server) {
       return new Promise((resolve, reject) => {
-        console.log(`${username}-${server}`)
         this.redis.get(`${username}-${server}`, (err, value) => {
           if (err)
             return reject(new Error(err));
